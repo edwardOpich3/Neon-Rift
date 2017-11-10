@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shoot : MonoBehaviour
-{
+public class BulletMove : MonoBehaviour {
+
     public float speed;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
     }
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
         transform.Translate(speed, 0, 0);
 
-        if(Camera.main.WorldToViewportPoint(transform.position).x > 1)
+        if (Camera.main.WorldToViewportPoint(transform.position).x > 1)
         {
             Destroy(gameObject);
         }
