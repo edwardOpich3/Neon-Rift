@@ -11,6 +11,7 @@ public class EnemyBehaviorA : MonoBehaviour
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
 		rigidbody.AddForce(new Vector2(-500.0f, 400.0f));
+		rigidbody.AddTorque(25.0f);
 	}
 	
 	// Update is called once per frame

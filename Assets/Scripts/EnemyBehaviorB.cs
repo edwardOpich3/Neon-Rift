@@ -16,7 +16,7 @@ public class EnemyBehaviorB : MonoBehaviour
     void Start ()
     {
         pos = transform.position;
-        axis = transform.right;
+        axis = transform.up;
         //rigidbody = GetComponent<Rigidbody2D>();
         //rigidbody.AddForce(new Vector2(-500.0f, 400.0f));
     }
@@ -24,7 +24,7 @@ public class EnemyBehaviorB : MonoBehaviour
 // Update is called once per frame
 void Update ()
     {
-        pos += transform.up * Time.deltaTime * speed;
+        pos -= transform.right * Time.deltaTime * speed;
         transform.position = pos + axis * Mathf.Sin(Time.time * frequency) * magnitude;
     }
 }
