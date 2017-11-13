@@ -17,10 +17,20 @@ public class PlayerMovement : MonoBehaviour {
 		if(Input.GetKey(KeyCode.W))
         {
 			transform.Translate(new Vector3(0.0f, speed, 0.0f));
+
+			if(Camera.main.WorldToViewportPoint(transform.position).y > 1)
+			{
+				transform.Translate(0.0f, -speed, 0.0f);
+			}
         }
         else if(Input.GetKey(KeyCode.S))
         {
 			transform.Translate(new Vector3(0.0f, -speed, 0.0f));
+
+			if(Camera.main.WorldToViewportPoint(transform.position).y < 0)
+			{
+				transform.Translate(0.0f, speed, 0.0f);
+			}
         }
 	}
 }

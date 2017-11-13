@@ -21,4 +21,12 @@ public class BulletMove : MonoBehaviour {
             Destroy(gameObject);
         }
     }
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if(other.gameObject.name.Substring(0, 5) == "Enemy")
+		{
+			Destroy(other.gameObject);
+		}
+	}
 }
