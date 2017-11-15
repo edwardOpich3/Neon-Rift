@@ -6,9 +6,12 @@ public class BulletMove : MonoBehaviour {
 
     public float speed;
 
+	private Spawning spawning;
+
     // Use this for initialization
     void Start()
     {
+		spawning = GameObject.Find("Game Manager").GetComponent<Spawning>();
     }
 
     // Update is called once per frame
@@ -27,6 +30,7 @@ public class BulletMove : MonoBehaviour {
 		if(other.gameObject.name.Substring(0, 5) == "Enemy")
 		{
 			Destroy(other.gameObject);
+			spawning.enemyHit();
 		}
 	}
 }
