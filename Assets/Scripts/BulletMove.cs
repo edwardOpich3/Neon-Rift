@@ -31,6 +31,7 @@ public class BulletMove : MonoBehaviour {
 		{
 			Destroy(other.gameObject);
 			spawning.enemyHit();
+			Destroy(gameObject);
 		}
 	}
 }
