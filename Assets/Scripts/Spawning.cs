@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Spawning : MonoBehaviour
 {
+    public GameObject scoreText;
+    public GameObject livesText;
 
-	public int maxEnemies = 10;		// Maximum number of enemies allowed in play; if currentEnemies equals or exceeds this, no more enemies can spawn until some are destroyed.
+    public int maxEnemies = 10;		// Maximum number of enemies allowed in play; if currentEnemies equals or exceeds this, no more enemies can spawn until some are destroyed.
 	public float spawnTime = 2.0f;	// Seconds between each spawn. Implemented as minimum wait in seconds per spawn
 	public Rect spawnZone;			// The rectangle that defines where enemies can spawn
 	public GameObject[] enemies;	// List of every possible enemy or projectile to spawn.
@@ -21,10 +23,13 @@ public class Spawning : MonoBehaviour
 		currentEnemies = 0;
 		currentTick = 0.0f;
 		score = 0;
-	}
-	
-	// Update is called once per frame
-	void Update ()
+        livesText.GetComponent<TextMesh>().text = "Lives: " + health;
+        scoreText.GetComponent<TextMesh>().text = "Score: " + getScore();
+
+    }
+
+    // Update is called once per frame
+    void Update ()
 	{
 		currentTick += Time.deltaTime;
 		if(currentTick > spawnTime && currentEnemies < maxEnemies)
@@ -34,6 +39,7 @@ public class Spawning : MonoBehaviour
 			currentTick = 0.0f;
 			currentEnemies++;
 		}
+
 	}
 
 	// Updates the currentEnemies count, as well as the score.
@@ -44,16 +50,19 @@ public class Spawning : MonoBehaviour
 
 		// Currently only here to demonstrate the scoring works. Delete before final release!
 		Debug.Log(score);
-	}
+        changeScore();
 
-	// Subtracts 1 HP from the player. Returns whether or not the player is still alive.
-	public bool playerHit()
+    }
+
+    // Subtracts 1 HP from the player. Returns whether or not the player is still alive.
+    public bool playerHit()
 	{
 		health--;
 
 		Debug.Log("HP Remaining: " + health);
+        changeLives();
 
-		return health > 0;
+        return health > 0;
 	}
 
 	// Returns the current score.
@@ -61,4 +70,14 @@ public class Spawning : MonoBehaviour
 	{
 		return score;
 	}
+
+    public void changeScore()
+    {
+        scoreText.GetComponent<TextMesh>().text = "Score: " + getScore()*10;
+    }
+
+    public void changeLives()
+    {
+        livesText.GetComponent<TextMesh>().text = "Lives: " + health;
+    }
 }
