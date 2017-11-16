@@ -12,12 +12,14 @@ public class Spawning : MonoBehaviour
 
 	private int currentEnemies;		// Number of enemies currently in play
 	private float currentTick;		// Time in seconds from last enemy spawn. Should it exceed spawnTime, spawning is now possible.
+	private int score;				// Current score. Currently represented via enemies destroyed.
 
 	// Use this for initialization
 	void Start ()
 	{
 		currentEnemies = 0;
 		currentTick = 0.0f;
+		score = 0;
 	}
 	
 	// Update is called once per frame
@@ -36,5 +38,14 @@ public class Spawning : MonoBehaviour
 	public void enemyHit()
 	{
 		currentEnemies--;
+		score++;
+
+		// Currently only here to demonstrate the scoring works. Delete before final release!
+		Debug.Log(score);
+	}
+
+	public int getScore()
+	{
+		return score;
 	}
 }
