@@ -9,6 +9,7 @@ public class Spawning : MonoBehaviour
 	public float spawnTime = 2.0f;	// Seconds between each spawn. Implemented as minimum wait in seconds per spawn
 	public Rect spawnZone;			// The rectangle that defines where enemies can spawn
 	public GameObject[] enemies;	// List of every possible enemy or projectile to spawn.
+	public int health = 3;			// Remaining HP. If the player being hit drops it to 0, the player is destroyed.
 
 	private int currentEnemies;		// Number of enemies currently in play
 	private float currentTick;		// Time in seconds from last enemy spawn. Should it exceed spawnTime, spawning is now possible.
@@ -35,6 +36,7 @@ public class Spawning : MonoBehaviour
 		}
 	}
 
+	// Updates the currentEnemies count, as well as the score.
 	public void enemyHit()
 	{
 		currentEnemies--;
@@ -44,6 +46,17 @@ public class Spawning : MonoBehaviour
 		Debug.Log(score);
 	}
 
+	// Subtracts 1 HP from the player. Returns whether or not the player is still alive.
+	public bool playerHit()
+	{
+		health--;
+
+		Debug.Log("HP Remaining: " + health);
+
+		return health > 0;
+	}
+
+	// Returns the current score.
 	public int getScore()
 	{
 		return score;

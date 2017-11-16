@@ -6,9 +6,12 @@ public class PlayerMovement : MonoBehaviour {
 
     public float speed = 0.1f;
 
+	private Spawning spawning;
+
 	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+	{
+		spawning = GameObject.Find("Game Manager").GetComponent<Spawning>();
 	}
 	
 	// Update is called once per frame
@@ -39,7 +42,10 @@ public class PlayerMovement : MonoBehaviour {
 		if(other.gameObject.name.Substring(0, 5) == "Enemy")
 		{
 			// Replace this with whatever should happen when the player gets hit by an enemy!
-			Destroy(gameObject);
+			if(!spawning.playerHit())
+			{
+				Destroy(gameObject);
+			}
 		}
 	}
 }
