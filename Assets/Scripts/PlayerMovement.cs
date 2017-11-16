@@ -33,4 +33,13 @@ public class PlayerMovement : MonoBehaviour {
 			}
         }
 	}
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if(other.gameObject.name.Substring(0, 5) == "Enemy")
+		{
+			// Replace this with whatever should happen when the player gets hit by an enemy!
+			Destroy(gameObject);
+		}
+	}
 }
