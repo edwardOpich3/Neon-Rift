@@ -80,4 +80,9 @@ public class Spawning : MonoBehaviour
     {
         livesText.GetComponent<TextMesh>().text = "Lives: " + health;
     }
+
+	public void cullEnemy()
+	{
+		currentEnemies--;
+	}
 }
