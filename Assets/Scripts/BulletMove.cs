@@ -27,7 +27,8 @@ public class BulletMove : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if(other.gameObject.name.Substring(0, 5) == "Enemy")
+		// Bullets destroy enemies, but they don't destroy enemy A, which is a projectile
+		if(other.gameObject.name.Substring(0, 5) == "Enemy" && other.gameObject.name[6] != 'A')
 		{
 			Destroy(other.gameObject);
 			spawning.enemyHit();
