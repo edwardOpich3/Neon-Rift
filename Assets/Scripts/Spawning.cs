@@ -8,14 +8,19 @@ public class Spawning : MonoBehaviour
     public GameObject livesText;
 
     public int maxEnemies = 10;		// Maximum number of enemies allowed in play; if currentEnemies equals or exceeds this, no more enemies can spawn until some are destroyed.
-	public float spawnTime = 2.0f;	// Seconds between each spawn. Implemented as minimum wait in seconds per spawn
+	public float startSpawnTime = 2.0f;	// Seconds between each spawn at game start. Implemented as minimum wait in seconds per spawn
+	public float minSpawnTime = 0.1f;	// Maximum spawn rate. This is the point where the difficulty plateaus.
 	public Rect spawnZone;			// The rectangle that defines where enemies can spawn
 	public GameObject[] enemies;	// List of every possible enemy or projectile to spawn.
 	public int health = 3;			// Remaining HP. If the player being hit drops it to 0, the player is destroyed.
+	public float spawnChangeTime = 10.0f;	// How often should we increase the spawn rate? In seconds.
 
 	private int currentEnemies;		// Number of enemies currently in play
 	private float currentTick;		// Time in seconds from last enemy spawn. Should it exceed spawnTime, spawning is now possible.
 	private int score;				// Current score. Currently represented via enemies destroyed.
+	private float spawnTime;		// Seconds between each spawn at game start. Implemented as minimum wait in seconds per spawn. Changes as game progresses.
+
+	private float prevSpawnChangeTime;	// Time since the spawn rate was last changed.
 
 	// Use this for initialization
 	void Start ()
@@ -25,7 +30,8 @@ public class Spawning : MonoBehaviour
 		score = 0;
         livesText.GetComponent<TextMesh>().text = "Lives: " + health;
         scoreText.GetComponent<TextMesh>().text = "Score: " + getScore();
-
+		spawnTime = startSpawnTime;
+		prevSpawnChangeTime = Time.time;
     }
 
     // Update is called once per frame
@@ -40,6 +46,12 @@ public class Spawning : MonoBehaviour
 			currentEnemies++;
 		}
 
+		// Increase the spawn rate when necessary
+		if(Time.time - prevSpawnChangeTime > spawnChangeTime && spawnTime > minSpawnTime)
+		{
+			spawnTime -= 0.1f;
+			prevSpawnChangeTime = Time.time;
+		}
 	}
 
 	// Updates the currentEnemies count, as well as the score.
@@ -48,10 +60,7 @@ public class Spawning : MonoBehaviour
 		currentEnemies--;
 		score++;
 
-		// Currently only here to demonstrate the scoring works. Delete before final release!
-		Debug.Log(score);
         changeScore();
-
     }
 
     // Subtracts 1 HP from the player. Returns whether or not the player is still alive.
@@ -59,7 +68,6 @@ public class Spawning : MonoBehaviour
 	{
 		health--;
 
-		Debug.Log("HP Remaining: " + health);
         changeLives();
 
         return health > 0;
