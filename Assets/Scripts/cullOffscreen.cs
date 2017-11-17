@@ -18,8 +18,8 @@ public class cullOffscreen : MonoBehaviour
 	{
 		Vector3 myPosition = Camera.main.WorldToViewportPoint(transform.position);
 
-		// If an object containing this script goes off screen, destroy it immediately
-		if (myPosition.x > 1 || myPosition.x < 0 || myPosition.y > 1 || myPosition.y < 0)
+		// If an object containing this script goes off left-screen, destroy it immediately
+		if (myPosition.x < 0)
 		{
 			if(gameObject.name.Substring(0, 5) == "Enemy")
 			{

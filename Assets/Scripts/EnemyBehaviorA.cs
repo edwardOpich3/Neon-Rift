@@ -12,7 +12,7 @@ public class EnemyBehaviorA : MonoBehaviour
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
 		rigidbody.AddForce(new Vector2(-500.0f, 0.0f));
-		rigidbody.AddTorque(Random.Range(5.0f, 25.0f));
+		rigidbody.AddTorque(Random.Range(20.0f, 200.0f));
 
 		player = GameObject.Find("Rocker Dude");
 

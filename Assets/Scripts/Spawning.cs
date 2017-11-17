@@ -4,23 +4,28 @@ using UnityEngine;
 
 public class Spawning : MonoBehaviour
 {
+	// HUD
     public GameObject scoreText;
     public GameObject livesText;
 
-    public int maxEnemies = 10;		// Maximum number of enemies allowed in play; if currentEnemies equals or exceeds this, no more enemies can spawn until some are destroyed.
-	public float startSpawnTime = 2.0f;	// Seconds between each spawn at game start. Implemented as minimum wait in seconds per spawn
-	public float minSpawnTime = 0.1f;	// Maximum spawn rate. This is the point where the difficulty plateaus.
-	public Rect spawnZone;			// The rectangle that defines where enemies can spawn
-	public GameObject[] enemies;	// List of every possible enemy or projectile to spawn.
-	public int health = 3;			// Remaining HP. If the player being hit drops it to 0, the player is destroyed.
-	public float spawnChangeTime = 10.0f;	// How often should we increase the spawn rate? In seconds.
+    public int maxEnemies = 10;					// Maximum number of enemies allowed in play; if currentEnemies equals or exceeds this, no more enemies can spawn until some are destroyed.
+	public float startSpawnTime = 2.0f;			// Seconds between each spawn at game start. Implemented as minimum wait in seconds per spawn
+	public float minSpawnTime = 0.1f;			// Maximum spawn rate. This is the point where the difficulty plateaus.
+	public Rect spawnZone;						// The rectangle that defines where enemies can spawn
+	public GameObject[] enemies;				// List of every possible enemy or projectile to spawn.
+	public float spawnChangeTime = 10.0f;		// How often should we increase the spawn rate? In seconds.
 
-	private int currentEnemies;		// Number of enemies currently in play
-	private float currentTick;		// Time in seconds from last enemy spawn. Should it exceed spawnTime, spawning is now possible.
-	private int score;				// Current score. Currently represented via enemies destroyed.
-	private float spawnTime;		// Seconds between each spawn at game start. Implemented as minimum wait in seconds per spawn. Changes as game progresses.
+	public int health = 3;						// Remaining HP. If the player being hit drops it to 0, the player is destroyed.
 
-	private float prevSpawnChangeTime;	// Time since the spawn rate was last changed.
+	private int score;							// Current score. Currently represented via enemies destroyed.
+
+	private int currentEnemies;					// Number of enemies currently in play
+	private float currentTick;					// Time in seconds from last enemy spawn. Should it exceed spawnTime, spawning is now possible.
+	private float spawnTime;					// Seconds between each spawn at game start. Implemented as minimum wait in seconds per spawn. Changes as game progresses.
+	private float prevSpawnChangeTime;			// Time since the spawn rate was last changed.
+
+	private float rockOnMeter;					// A value between 0 and 100 determining how full the "Rock On" meter is.
+	private float rockGodMeter;					// A value between 0 and 100 determining how full the "Rock GOD" meter is.
 
 	// Use this for initialization
 	void Start ()
@@ -32,6 +37,9 @@ public class Spawning : MonoBehaviour
         scoreText.GetComponent<TextMesh>().text = "Score: " + getScore();
 		spawnTime = startSpawnTime;
 		prevSpawnChangeTime = Time.time;
+
+		rockOnMeter = 0.0f;
+		rockGodMeter = 0.0f;
     }
 
     // Update is called once per frame
@@ -61,6 +69,23 @@ public class Spawning : MonoBehaviour
 		score++;
 
         changeScore();
+
+		if(rockOnMeter < 100.0f)
+		{
+			rockOnMeter += 5.0f;
+			if(rockOnMeter >= 100.0f)
+			{
+				rockOnMeter = 100.0f;
+				Debug.Log("Rock On Meter full!");
+
+				rockGodMeter += 33.4f;
+				if(rockGodMeter >= 100.0f)
+				{
+					rockGodMeter = 100.0f;
+					Debug.Log("Rock GOD Meter full!");
+				}
+			}
+		}
     }
 
     // Subtracts 1 HP from the player. Returns whether or not the player is still alive.
