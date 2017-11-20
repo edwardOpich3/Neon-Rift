@@ -7,6 +7,7 @@ public class Spawning : MonoBehaviour
 	// HUD
     public GameObject scoreText;
     public GameObject livesText;
+	public GameObject rockOnText;
 
     public int maxEnemies = 10;					// Maximum number of enemies allowed in play; if currentEnemies equals or exceeds this, no more enemies can spawn until some are destroyed.
 	public float startSpawnTime = 2.0f;			// Seconds between each spawn at game start. Implemented as minimum wait in seconds per spawn
@@ -16,6 +17,8 @@ public class Spawning : MonoBehaviour
 	public float spawnChangeTime = 10.0f;		// How often should we increase the spawn rate? In seconds.
 
 	public int health = 3;						// Remaining HP. If the player being hit drops it to 0, the player is destroyed.
+
+	private PlayerShoot playerShooting;			// The player's shooting script. Used to determine if the player is in Rock On or Rock GOD mode.
 
 	private int score;							// Current score. Currently represented via enemies destroyed.
 
@@ -33,13 +36,17 @@ public class Spawning : MonoBehaviour
 		currentEnemies = 0;
 		currentTick = 0.0f;
 		score = 0;
+
+		rockOnMeter = 1.0f;
+		rockGodMeter = 0.0f;
+
         livesText.GetComponent<TextMesh>().text = "Lives: " + health;
-        scoreText.GetComponent<TextMesh>().text = "Score: " + getScore();
+        scoreText.GetComponent<TextMesh>().text = "Score: " + score;
+		rockOnText.GetComponent<TextMesh>().text = "Rock On: " + rockOnMeter.ToString("P1");
 		spawnTime = startSpawnTime;
 		prevSpawnChangeTime = Time.time;
 
-		rockOnMeter = 0.0f;
-		rockGodMeter = 0.0f;
+		playerShooting = GameObject.Find("Rocker Dude").GetComponent<PlayerShoot>();
     }
 
     // Update is called once per frame
@@ -60,6 +67,18 @@ public class Spawning : MonoBehaviour
 			spawnTime -= 0.1f;
 			prevSpawnChangeTime = Time.time;
 		}
+
+		if(playerShooting.isRockOn)
+		{
+			rockOnMeter -= 0.1f * Time.deltaTime;
+			if(rockOnMeter <= 0.0f)
+			{
+				rockOnMeter = 0.0f;
+				Debug.Log("Rock On is over!");
+			}
+
+			rockOnText.GetComponent<TextMesh>().text = "Rock On: " + rockOnMeter.ToString("P1");
+		}
 	}
 
 	// Updates the currentEnemies count, as well as the score.
@@ -70,22 +89,24 @@ public class Spawning : MonoBehaviour
 
         changeScore();
 
-		if(rockOnMeter < 100.0f)
+		if(rockOnMeter < 1.0f && !(playerShooting.isRockOn || playerShooting.isRockGod))
 		{
-			rockOnMeter += 5.0f;
-			if(rockOnMeter >= 100.0f)
+			rockOnMeter += 0.05f;
+			if(rockOnMeter >= 1.0f)
 			{
-				rockOnMeter = 100.0f;
+				rockOnMeter = 1.0f;
 				Debug.Log("Rock On Meter full!");
 
 				rockGodMeter += 33.4f;
-				if(rockGodMeter >= 100.0f)
+				if(rockGodMeter >= 1.0f)
 				{
-					rockGodMeter = 100.0f;
+					rockGodMeter = 1.0f;
 					Debug.Log("Rock GOD Meter full!");
 				}
 			}
 		}
+
+		rockOnText.GetComponent<TextMesh>().text = "Rock On: " + rockOnMeter.ToString("P1");
     }
 
     // Subtracts 1 HP from the player. Returns whether or not the player is still alive.
@@ -117,5 +138,15 @@ public class Spawning : MonoBehaviour
 	public void cullEnemy()
 	{
 		currentEnemies--;
+	}
+
+	public float getRockOn()
+	{
+		return rockOnMeter;
+	}
+
+	public float getRockGod()
+	{
+		return rockGodMeter;
 	}
 }
