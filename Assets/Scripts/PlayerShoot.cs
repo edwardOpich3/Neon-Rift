@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour {
 
     public GameObject bullet;
+	public GameObject godBullet;
     public GameObject player;
 
 	public float shootRate = 2.0f;		// How many bullets can the player shoot per second?
@@ -31,9 +32,18 @@ public class PlayerShoot : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		if (Input.GetKeyDown("space") && (canShoot || isRockOn))
+		if (Input.GetKeyDown("space") && (canShoot || isRockOn || isRockGod))
         {
-            GameObject clone = Instantiate(bullet, player.transform.position, Quaternion.identity);
+			if(!isRockGod)
+			{
+            	GameObject clone = Instantiate(bullet, player.transform.position, Quaternion.identity);
+			}
+			else
+			{
+				GameObject clone = Instantiate(godBullet, new Vector3(player.transform.position.x, 0.0f, 0.0f), Quaternion.identity);
+				spawning.godBulletFired();
+			}
+
 			shootTimer = 0.0f;
 			canShoot = false;
         }
@@ -45,13 +55,23 @@ public class PlayerShoot : MonoBehaviour {
 		}
 
 		// Activate Rock ON meter if it's full and the player hits C
-		if(Input.GetKeyDown(KeyCode.C) && spawning.getRockOn() == 1.0f)
+		if(Input.GetKeyDown(KeyCode.C) && spawning.getRockOn() == 1.0f && !isRockGod)
 		{
 			isRockOn = true;
 		}
 		else if(spawning.getRockOn() == 0.0f)
 		{
 			isRockOn = false;
+		}
+
+		// Activate God mode if the Rock GOD meter is full and the player hits V
+		if(Input.GetKey(KeyCode.V) && spawning.getRockGod() == 1.0f && !isRockOn)
+		{
+			isRockGod = true;
+		}
+		else if(spawning.getRockGod() == 0.0f)
+		{
+			isRockGod = false;
 		}
     }
 }

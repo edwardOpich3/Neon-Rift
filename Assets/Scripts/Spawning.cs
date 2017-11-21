@@ -8,6 +8,7 @@ public class Spawning : MonoBehaviour
     public GameObject scoreText;
     public GameObject livesText;
 	public GameObject rockOnText;
+	public GameObject rockGodText;
 
     public int maxEnemies = 10;					// Maximum number of enemies allowed in play; if currentEnemies equals or exceeds this, no more enemies can spawn until some are destroyed.
 	public float startSpawnTime = 2.0f;			// Seconds between each spawn at game start. Implemented as minimum wait in seconds per spawn
@@ -37,12 +38,13 @@ public class Spawning : MonoBehaviour
 		currentTick = 0.0f;
 		score = 0;
 
-		rockOnMeter = 1.0f;
-		rockGodMeter = 0.0f;
+		rockOnMeter = 0.0f;
+		rockGodMeter = 1.0f;
 
         livesText.GetComponent<TextMesh>().text = "Lives: " + health;
         scoreText.GetComponent<TextMesh>().text = "Score: " + score;
 		rockOnText.GetComponent<TextMesh>().text = "Rock On: " + rockOnMeter.ToString("P1");
+		rockGodText.GetComponent<TextMesh>().text = "Rock GOD: " + rockGodMeter.ToString("P1");
 		spawnTime = startSpawnTime;
 		prevSpawnChangeTime = Time.time;
 
@@ -74,10 +76,20 @@ public class Spawning : MonoBehaviour
 			if(rockOnMeter <= 0.0f)
 			{
 				rockOnMeter = 0.0f;
-				Debug.Log("Rock On is over!");
 			}
 
 			rockOnText.GetComponent<TextMesh>().text = "Rock On: " + rockOnMeter.ToString("P1");
+		}
+
+		if(playerShooting.isRockGod)
+		{
+			rockGodMeter -= 0.05f * Time.deltaTime;
+			if(rockGodMeter <= 0.0f)
+			{
+				rockGodMeter = 0.0f;
+			}
+
+			rockGodText.GetComponent<TextMesh>().text = "Rock GOD: " + rockGodMeter.ToString("P1");
 		}
 	}
 
@@ -95,14 +107,14 @@ public class Spawning : MonoBehaviour
 			if(rockOnMeter >= 1.0f)
 			{
 				rockOnMeter = 1.0f;
-				Debug.Log("Rock On Meter full!");
 
-				rockGodMeter += 33.4f;
-				if(rockGodMeter >= 1.0f)
+				rockGodMeter += 0.333f;
+				if(rockGodMeter >= 0.999f)
 				{
 					rockGodMeter = 1.0f;
-					Debug.Log("Rock GOD Meter full!");
 				}
+
+				rockGodText.GetComponent<TextMesh>().text = "Rock GOD: " + rockGodMeter.ToString("P1");
 			}
 		}
 
@@ -148,5 +160,11 @@ public class Spawning : MonoBehaviour
 	public float getRockGod()
 	{
 		return rockGodMeter;
+	}
+
+	public void godBulletFired()
+	{
+		rockGodMeter = 0.0f;
+		rockGodText.GetComponent<TextMesh>().text = "Rock GOD: " + rockGodMeter.ToString("P1");
 	}
 }
