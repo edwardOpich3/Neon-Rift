@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyBehaviorB : MonoBehaviour
 {
-    private Rigidbody2D rigidbody;
     private Vector3 pos;
     public float speed;
     public float frequency;

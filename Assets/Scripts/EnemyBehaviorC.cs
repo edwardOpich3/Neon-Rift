@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyBehaviorC : MonoBehaviour {
     public bool isJumping;
-    private Collider2D enemyCCollider;
     private Rigidbody2D enemyCRigidbody;
     public float speed = 0.1f;
     public float jumpForce = 200.0f;
@@ -13,7 +12,6 @@ public class EnemyBehaviorC : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        enemyCCollider = GetComponent<BoxCollider2D>();
         enemyCRigidbody = GetComponent<Rigidbody2D>();
         isJumping = true;
         hitStage = false;

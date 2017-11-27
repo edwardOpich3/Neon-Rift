@@ -39,7 +39,7 @@ public class Spawning : MonoBehaviour
 		score = 0;
 
 		rockOnMeter = 0.0f;
-		rockGodMeter = 1.0f;
+		rockGodMeter = 0.0f;
 
         livesText.GetComponent<TextMesh>().text = "Lives: " + health;
         scoreText.GetComponent<TextMesh>().text = "Score: " + score;
@@ -72,13 +72,25 @@ public class Spawning : MonoBehaviour
 
 		if(playerShooting.isRockOn)
 		{
-			rockOnMeter -= 0.1f * Time.deltaTime;
+			rockOnMeter -= 0.2f * Time.deltaTime;
 			if(rockOnMeter <= 0.0f)
 			{
 				rockOnMeter = 0.0f;
 			}
 
 			rockOnText.GetComponent<TextMesh>().text = "Rock On: " + rockOnMeter.ToString("P1");
+		}
+
+		else if(rockOnMeter == 1.0f)
+		{
+			rockGodMeter += 0.01f * Time.deltaTime;
+
+			if(rockGodMeter >= 1.0f)
+			{
+				rockGodMeter = 1.0f;
+			}
+
+			rockGodText.GetComponent<TextMesh>().text = "Rock GOD: " + rockGodMeter.ToString("P1");
 		}
 
 		if(playerShooting.isRockGod)
