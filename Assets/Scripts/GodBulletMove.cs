@@ -23,6 +23,8 @@ public class GodBulletMove : MonoBehaviour
 
 		myAudio = GetComponents<AudioSource>();
 
+		BGM.Pause();
+
 		// Break the song into its 3 sections, then each section into its chords
 		// Then, randomly select one of the chord tones to play
 		int[] trio;
@@ -131,5 +133,10 @@ public class GodBulletMove : MonoBehaviour
 			Destroy(other.gameObject);
 			spawning.enemyHit();
 		}
+	}
+
+	void OnDestroy()
+	{
+		BGM.UnPause();	
 	}
 }

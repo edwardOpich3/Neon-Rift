@@ -13,7 +13,6 @@ public class BulletMove : MonoBehaviour {
 	private static Spawning spawning;
 	private AudioSource myAudio;
 	private static AudioSource BGM;
-	private static PlayerShoot player;
 
     // Use this for initialization
     void Start()
@@ -21,112 +20,91 @@ public class BulletMove : MonoBehaviour {
 		spawning = GameObject.Find("Game Manager").GetComponent<Spawning>();
 		BGM = GameObject.Find("Game Manager").GetComponent<AudioSource>();
 		myAudio = GetComponent<AudioSource>();
-		player = GameObject.Find("Rocker Dude").GetComponent<PlayerShoot>();
 
-		// Ironically, if the player isn't rocking out, getting the pitch is more complicated!
-		if(!player.isRockOn)
+		// Break the song into its 3 sections, then each section into its chords
+		// Then, randomly select one of the chord tones to play
+		int[] trio;
+
+		// First part
+		if(BGM.time < (21.0f + (1.0f / 3.0f)))
 		{
-			// Break the song into its 3 sections, then each section into its chords
-			// Then, randomly select one of the chord tones to play
-			int[] trio;
+			// Mod (10 + 2/3)
+			float musicTime = BGM.time % (10.0f + (2.0f / 3.0f));
 
-			// First part
-			if(BGM.time < (21.0f + (1.0f / 3.0f)))
+			if(musicTime < (2.0f + (2.0f / 3.0f)))
 			{
-				// Mod (10 + 2/3)
-				float musicTime = BGM.time % (10.0f + (2.0f / 3.0f));
-
-				if(musicTime < (2.0f + (2.0f / 3.0f)))
-				{
-					// i chord
-					trio = new int[] { 0, 2, 4 };
-				}
-				else if(musicTime < 4.0f)
-				{
-					// VI chord
-					trio = new int[] { 5, 0, 2 };
-				}
-				else if (musicTime < (5.0f + (1.0f / 3.0f)))
-				{
-					// VII chord
-					trio = new int[] { 6, 1, 3 };
-				}
-				else if (musicTime < 8.0f)
-				{
-					// i chord
-					trio = new int[] { 0, 2, 4 };
-				}
-				else if (musicTime < (9.0f + (1.0f / 3.0f)))
-				{
-					// III chord
-					trio = new int[] { 2, 4, 6 };
-				}
-				else
-				{
-					// iv chord
-					trio = new int[] { 3, 5, 0 };
-				}
+				// i chord
+				trio = new int[] { 0, 2, 4 };
 			}
-
-			// Second part
-			else if(BGM.time < (37.0f + (1.0f / 3.0f)))
+			else if(musicTime < 4.0f)
 			{
-				// Mod (5 + 1/3)
-				float musicTime = BGM.time % (5.0f + (1.0f / 3.0f));
-
-				if(musicTime < (2.0f + (2.0f / 3.0f)))
-				{
-					// iv chord
-					trio = new int[] { 3, 5, 0 };
-				}
-				else
-				{
-					// i chord
-					trio = new int[] { 0, 2, 4 };
-				}
+				// VI chord
+				trio = new int[] { 5, 0, 2 };
 			}
-
-			// End part
+			else if (musicTime < (5.0f + (1.0f / 3.0f)))
+			{
+				// VII chord
+				trio = new int[] { 6, 1, 3 };
+			}
+			else if (musicTime < 8.0f)
+			{
+				// i chord
+				trio = new int[] { 0, 2, 4 };
+			}
+			else if (musicTime < (9.0f + (1.0f / 3.0f)))
+			{
+				// III chord
+				trio = new int[] { 2, 4, 6 };
+			}
 			else
 			{
-				float musicTime = BGM.time % (5.0f + (1.0f / 3.0f));
-
-				if(musicTime < (1.0f + (1.0f / 3.0f)))
-				{
-					// VI chord
-					trio = new int[] { 5, 0, 2 };
-				}
-				else if (musicTime < (2.0f + (2.0f / 3.0f)))
-				{
-					// VII chord
-					trio = new int[] { 6, 1, 3 };
-				}
-				else
-				{
-					// V chord
-					trio = new int[] { 4, 7, 1 };
-				}
+				// iv chord
+				trio = new int[] { 3, 5, 0 };
 			}
-
-			// Randomly pull this bullet's note from the list of valid pitches
-			myAudio.pitch = pitches[trio[Random.Range(0, trio.Length)]];
 		}
 
-		// If he's soloing, forget the chord tones, just grab something from the scale!
-		else
-   		{
+		// Second part
+		else if(BGM.time < (37.0f + (1.0f / 3.0f)))
+		{
+			// Mod (5 + 1/3)
 			float musicTime = BGM.time % (5.0f + (1.0f / 3.0f));
 
-			if(BGM.time >= (37.0f + (1.0f / 3.0f)) && musicTime >= (2.0f + (2.0f / 3.0f)))
+			if(musicTime < (2.0f + (2.0f / 3.0f)))
 			{
-				myAudio.pitch = pitches[Random.Range(0, pitches.Length)];
+				// iv chord
+				trio = new int[] { 3, 5, 0 };
 			}
-
 			else
 			{
-				myAudio.pitch = pitches[Random.Range(0, pitches.Length - 1)];
+				// i chord
+				trio = new int[] { 0, 2, 4 };
 			}
 		}
+
+		// End part
+		else
+		{
+			float musicTime = BGM.time % (5.0f + (1.0f / 3.0f));
+
+			if(musicTime < (1.0f + (1.0f / 3.0f)))
+			{
+				// VI chord
+				trio = new int[] { 5, 0, 2 };
+			}
+			else if (musicTime < (2.0f + (2.0f / 3.0f)))
+			{
+				// VII chord
+				trio = new int[] { 6, 1, 3 };
+			}
+			else
+			{
+				// V chord
+				trio = new int[] { 4, 7, 1 };
+			}
+		}
+
+		// Randomly pull this bullet's note from the list of valid pitches
+		myAudio.pitch = pitches[trio[Random.Range(0, trio.Length)]];
     }
 
     // Update is called once per frame
