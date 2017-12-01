@@ -2,24 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletMove : MonoBehaviour {
+public class GodBulletMove : MonoBehaviour
+{
 
-    public float speed;
+	public float speed;
 
 	private static float[] pitches = { 1f/1f, 9f/8f, 6f/5f, 4f/3f, 3f/2f, 8f/5f, 16f/9f, 15f/8f };	// The pitches at which the note can ring while still sounding good
 	// From left to right: Tonic, Major 2nd, Minor 3rd, Perfect 4th, Perfect 5th, Minor 6th, Minor 7th
 	// There's also a Major 7th in there for the special case of the dominant V at the end of the song
 
 	private static Spawning spawning;
-	private AudioSource myAudio;
+	private AudioSource[] myAudio;
 	private static AudioSource BGM;
 
-    // Use this for initialization
-    void Start()
-    {
+	// Use this for initialization
+	void Start()
+	{
 		spawning = GameObject.Find("Game Manager").GetComponent<Spawning>();
 		BGM = GameObject.Find("Game Manager").GetComponent<AudioSource>();
-		myAudio = GetComponent<AudioSource>();
+
+		myAudio = GetComponents<AudioSource>();
+
+		BGM.Pause();
 
 		// Break the song into its 3 sections, then each section into its chords
 		// Then, randomly select one of the chord tones to play
@@ -103,30 +107,36 @@ public class BulletMove : MonoBehaviour {
 			}
 		}
 
-		// Randomly pull this bullet's note from the list of valid pitches
-		myAudio.pitch = pitches[trio[Random.Range(0, trio.Length)]];
-    }
+		// The chord should match the chord currently playing
+		for(uint i = 0; i < myAudio.Length; i++)
+		{
+			myAudio[i].pitch = pitches[trio[i]];
+		}
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        transform.Translate(speed, 0, 0);
+	// Update is called once per frame
+	void Update()
+	{
+		transform.Translate(speed, 0, 0);
 
-        if (Camera.main.WorldToViewportPoint(transform.position).x > 1)
-        {
-            Destroy(gameObject);
-        }
-    }
+		if (Camera.main.WorldToViewportPoint(transform.position).x > 1)
+		{
+			Destroy(gameObject);
+		}
+	}
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		// Bullets destroy enemies, but they don't destroy enemy A, which is a projectile
-		if(other.gameObject.name.Substring(0, 5) == "Enemy" && other.gameObject.tag != "Invunrable")
-
-        {
+		if(other.gameObject.name.Substring(0, 5) == "Enemy" && other.gameObject.name[6] != 'A')
+		{
 			Destroy(other.gameObject);
 			spawning.enemyHit();
-			Destroy(gameObject);
 		}
+	}
+
+	void OnDestroy()
+	{
+		BGM.UnPause();	
 	}
 }
