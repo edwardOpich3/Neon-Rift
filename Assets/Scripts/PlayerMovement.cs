@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour {
 
@@ -59,7 +60,7 @@ public class PlayerMovement : MonoBehaviour {
 			// Replace this with whatever should happen when the player gets hit by an enemy!
 			if(!spawning.playerHit())
 			{
-				Destroy(gameObject);
+				SceneManager.LoadScene("Game Over");
 			}
 			isInvincible = true;
 		}
