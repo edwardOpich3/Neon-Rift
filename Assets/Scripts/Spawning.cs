@@ -66,7 +66,7 @@ public class Spawning : MonoBehaviour
 		// Increase the spawn rate when necessary
 		if(Time.time - prevSpawnChangeTime > spawnChangeTime && spawnTime > minSpawnTime)
 		{
-			spawnTime -= 0.1f;
+			spawnTime -= 0.01f;
 			prevSpawnChangeTime = Time.time;
 		}
 
