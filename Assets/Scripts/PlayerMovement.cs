@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour {
         {
 			transform.Translate(new Vector3(0.0f, speed, 0.0f));
 
-			if(Camera.main.WorldToViewportPoint(transform.position).y > 1)
+			if(Camera.main.WorldToViewportPoint(transform.position).y > 0.8)
 			{
 				transform.Translate(0.0f, -speed, 0.0f);
 			}
@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour {
         {
 			transform.Translate(new Vector3(0.0f, -speed, 0.0f));
 
-			if(Camera.main.WorldToViewportPoint(transform.position).y < 0)
+			if(Camera.main.WorldToViewportPoint(transform.position).y < 0.2)
 			{
 				transform.Translate(0.0f, speed, 0.0f);
 			}
