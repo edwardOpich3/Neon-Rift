@@ -29,7 +29,14 @@ public class EnemyBehaviorC : MonoBehaviour {
         if (this.transform.position.x <= -1.88)
         {
             enemyCRigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+            this.name = "Enemy H";
+
         }
         isJumping = false;
+
+        if(hitStage == true)
+        {
+            //this.name = "Enemy H";
+        }
     }
 }
