@@ -17,7 +17,7 @@ public class PlayerShoot : MonoBehaviour {
 	private Spawning spawning;
 
 	private float shootTimer;				// How long has passed since last shot?
-	private bool canShoot;					// Can the player currently shoot?
+	public bool canShoot;					// Can the player currently shoot?
 
 	// Use this for initialization
 	void Start ()
