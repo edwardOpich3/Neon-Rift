@@ -3,40 +3,48 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBehaviorC : MonoBehaviour {
-    public bool isJumping;
-    private Rigidbody2D enemyCRigidbody;
-    public float speed = 0.1f;
-    public float jumpForce = 200.0f;
-    public bool hitStage;
+	public bool isJumping;
+	private Rigidbody2D enemyCRigidbody;
+	public float groundSpeed = -0.3f;
+	public float jumpForce = 350.0f;
+	public bool hitStage;
+	public float jumpEndPos = 0;
+	public float jumpSpeed = -0.02f;
 
-    // Use this for initialization
-    void Start()
-    {
-        enemyCRigidbody = GetComponent<Rigidbody2D>();
-        isJumping = true;
-        hitStage = false;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        transform.Translate(speed, 0, 0);
-        if (isJumping)
-        {
-            enemyCRigidbody.constraints = RigidbodyConstraints2D.FreezeAll ^ RigidbodyConstraints2D.FreezePositionY;  // Unfreeze Y
-            enemyCRigidbody.AddForce(new Vector2(0.0f, jumpForce));
-        }
-        if (this.transform.position.x <= -1.88)
-        {
-            enemyCRigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
-            this.name = "Enemy H";
+	// Use this for initialization
+	void Start()
+	{
+		jumpEndPos = this.transform.position.y - 0.2f;
+		enemyCRigidbody = GetComponent<Rigidbody2D>();
+		enemyCRigidbody.gravityScale = 0.25f;
+		isJumping = true;
+		hitStage = false;
+	}
 
-        }
-        isJumping = false;
+	// Update is called once per frame
+	void Update()
+	{
 
-        if(hitStage == true)
-        {
-            //this.name = "Enemy H";
-        }
-    }
+		if (isJumping)
+		{
+			enemyCRigidbody.constraints = RigidbodyConstraints2D.FreezeAll ^ RigidbodyConstraints2D.FreezePositionY;  // Unfreeze Y
+			enemyCRigidbody.AddForce(new Vector2(0.0f, jumpForce));
+
+		}
+		if (enemyCRigidbody.velocity.y < 0 && this.transform.position.y > jumpEndPos - 0.1f && this.transform.position.y < jumpEndPos + 0.1f)
+		{
+			enemyCRigidbody.constraints = RigidbodyConstraints2D.FreezeAll;   
+		}
+		if(this.transform.position.y > jumpEndPos - 0.1f && this.transform.position.y < jumpEndPos + 0.1f && enemyCRigidbody.velocity.y == 0)
+		{
+			transform.Translate(groundSpeed, 0, 0);
+			this.tag = "Invunrable";
+		}
+		else
+		{
+			transform.Translate(jumpSpeed, 0, 0);
+		}
+		isJumping = false;
+	}
 }

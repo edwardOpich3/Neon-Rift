@@ -132,7 +132,7 @@ public class GodBulletMove : MonoBehaviour
 		{
 			Destroy(other.gameObject);
 
-			if(other.gameObject.name[6] != 'A')
+			if(other.gameObject.name[6] != 'A' && other.gameObject.tag != "Invunrable")
 			{
 				spawning.enemyHit();
 			}
