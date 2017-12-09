@@ -128,10 +128,18 @@ public class GodBulletMove : MonoBehaviour
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		// Bullets destroy enemies, but they don't destroy enemy A, which is a projectile
-		if(other.gameObject.name.Substring(0, 5) == "Enemy" && other.gameObject.name[6] != 'A')
+		if(other.gameObject.name.Substring(0, 5) == "Enemy")
 		{
 			Destroy(other.gameObject);
-			spawning.enemyHit();
+
+			if(other.gameObject.name[6] != 'A')
+			{
+				spawning.enemyHit();
+			}
+			else
+			{
+				spawning.cullEnemy();
+			}
 		}
 	}
 

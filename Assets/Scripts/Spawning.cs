@@ -9,6 +9,8 @@ public class Spawning : MonoBehaviour
     public GameObject livesText;
 	public GameObject rockOnText;
 	public GameObject rockGodText;
+	public GameObject progress;					// rock on progress bar
+	public GameObject rgProgress;				// rock god progress bar
 
     public int maxEnemies = 10;					// Maximum number of enemies allowed in play; if currentEnemies equals or exceeds this, no more enemies can spawn until some are destroyed.
 	public float startSpawnTime = 2.0f;			// Seconds between each spawn at game start. Implemented as minimum wait in seconds per spawn
@@ -73,9 +75,15 @@ public class Spawning : MonoBehaviour
 		if(playerShooting.isRockOn)
 		{
 			rockOnMeter -= 0.2f * Time.deltaTime;
+
+			Vector3 barScale = progress.transform.localScale;
+			barScale -= new Vector3 (0.6f * Time.deltaTime, 0.0f, 0.0f);
+			progress.transform.localScale = barScale;
+
 			if(rockOnMeter <= 0.0f)
 			{
 				rockOnMeter = 0.0f;
+				//progress.transform.localScale = new Vector3 (0.0f, 0.0f, 0.0f);
 			}
 
 			rockOnText.GetComponent<TextMesh>().text = "Rock On: " + rockOnMeter.ToString("P1");
@@ -84,6 +92,11 @@ public class Spawning : MonoBehaviour
 		else if(rockOnMeter == 1.0f)
 		{
 			rockGodMeter += 0.01f * Time.deltaTime;
+
+			// increasing size of progress bar
+			Vector3 rgBarScale = rgProgress.transform.localScale;
+			rgBarScale += new Vector3 (0.075f * Time.deltaTime, 0.0f, 0.0f);
+			rgProgress.transform.localScale = rgBarScale;
 
 			if(rockGodMeter >= 1.0f)
 			{
@@ -116,11 +129,23 @@ public class Spawning : MonoBehaviour
 		if(rockOnMeter < 1.0f && !(playerShooting.isRockOn || playerShooting.isRockGod))
 		{
 			rockOnMeter += 0.05f;
+
+			// increasing size of progress bar
+			Vector3 barScale = progress.transform.localScale;
+			barScale += new Vector3 (0.15f, 0.0f, 0.0f);
+			progress.transform.localScale = barScale;
+
 			if(rockOnMeter >= 1.0f)
 			{
 				rockOnMeter = 1.0f;
 
 				rockGodMeter += 0.333f;
+
+				// increasing size of progress bar
+				Vector3 rgBarScale = rgProgress.transform.localScale;
+				rgBarScale += new Vector3 (1.0f, 0.0f, 0.0f);
+				rgProgress.transform.localScale = rgBarScale;
+
 				if(rockGodMeter >= 0.999f)
 				{
 					rockGodMeter = 1.0f;
