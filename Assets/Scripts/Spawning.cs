@@ -31,10 +31,14 @@ public class Spawning : MonoBehaviour
 	private float prevSpawnChangeTime;			// Time since the spawn rate was last changed.
 
 	private float rockOnMeter;					// A value between 0 and 100 determining how full the "Rock On" meter is.
-	private float rockGodMeter;					// A value between 0 and 100 determining how full the "Rock GOD" meter is.
+	private float rockGodMeter;                 // A value between 0 and 100 determining how full the "Rock GOD" meter is.
 
-	// Use this for initialization
-	void Start ()
+    public AudioClip playerHitSound;                //AudioCip to player when player hit 
+    private AudioSource source;                //Audio Source for playing sound effect
+
+
+    // Use this for initialization
+    void Start ()
 	{
 		currentEnemies = 0;
 		currentTick = 0.0f;
@@ -51,6 +55,10 @@ public class Spawning : MonoBehaviour
 		prevSpawnChangeTime = Time.time;
 
 		playerShooting = GameObject.Find("Rocker Dude").GetComponent<PlayerShoot>();
+
+        source = GetComponent<AudioSource>();
+        source.enabled = true;
+
     }
 
     // Update is called once per frame
@@ -161,9 +169,12 @@ public class Spawning : MonoBehaviour
     // Subtracts 1 HP from the player. Returns whether or not the player is still alive.
     public bool playerHit()
 	{
-		health--;
+
+        health--;
 
         changeLives();
+        source.volume = 3.5f;
+        source.PlayOneShot(playerHitSound);
 
         return health > 0;
 	}
