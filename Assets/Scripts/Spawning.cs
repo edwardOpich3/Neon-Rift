@@ -33,7 +33,6 @@ public class Spawning : MonoBehaviour
 	private float rockOnMeter;					// A value between 0 and 100 determining how full the "Rock On" meter is.
 	private float rockGodMeter;                 // A value between 0 and 100 determining how full the "Rock GOD" meter is.
 
-    public AudioClip playerHitSound;                //AudioCip to player when player hit 
     private AudioSource source;                //Audio Source for playing sound effect
 
 
@@ -157,8 +156,6 @@ public class Spawning : MonoBehaviour
         health--;
 
         changeLives();
-        source.volume = 3.5f;
-        source.PlayOneShot(playerHitSound);
 
         return health > 0;
 	}
