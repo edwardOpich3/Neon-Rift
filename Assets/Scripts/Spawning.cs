@@ -31,20 +31,17 @@ public class Spawning : MonoBehaviour
 	private float prevSpawnChangeTime;			// Time since the spawn rate was last changed.
 
 	private float rockOnMeter;					// A value between 0 and 100 determining how full the "Rock On" meter is.
-	private float rockGodMeter;                 // A value between 0 and 100 determining how full the "Rock GOD" meter is.
+	private float rockGodMeter;					// A value between 0 and 100 determining how full the "Rock GOD" meter is.
 
-    private AudioSource source;                //Audio Source for playing sound effect
-
-
-    // Use this for initialization
-    void Start ()
+	// Use this for initialization
+	void Start ()
 	{
 		currentEnemies = 0;
 		currentTick = 0.0f;
 		score = 0;
 
-		rockOnMeter = 1.0f;
-		rockGodMeter = 0.5f;
+		rockOnMeter = 0.0f;
+		rockGodMeter = 0.0f;
 
         livesText.GetComponent<TextMesh>().text = "Lives: " + health;
         scoreText.GetComponent<TextMesh>().text = "Score: " + score;
@@ -54,10 +51,6 @@ public class Spawning : MonoBehaviour
 		prevSpawnChangeTime = Time.time;
 
 		playerShooting = GameObject.Find("Rocker Dude").GetComponent<PlayerShoot>();
-
-        source = GetComponent<AudioSource>();
-        source.enabled = true;
-
     }
 
     // Update is called once per frame
@@ -83,6 +76,10 @@ public class Spawning : MonoBehaviour
 		{
 			rockOnMeter -= 0.2f * Time.deltaTime;
 
+			Vector3 barScale = progress.transform.localScale;
+			barScale -= new Vector3 (0.6f * Time.deltaTime, 0.0f, 0.0f);
+			progress.transform.localScale = barScale;
+
 			if(rockOnMeter <= 0.0f)
 			{
 				rockOnMeter = 0.0f;
@@ -95,6 +92,11 @@ public class Spawning : MonoBehaviour
 		else if(rockOnMeter == 1.0f)
 		{
 			rockGodMeter += 0.01f * Time.deltaTime;
+
+			// increasing size of progress bar
+			Vector3 rgBarScale = rgProgress.transform.localScale;
+			rgBarScale += new Vector3 (0.075f * Time.deltaTime, 0.0f, 0.0f);
+			rgProgress.transform.localScale = rgBarScale;
 
 			if(rockGodMeter >= 1.0f)
 			{
@@ -114,9 +116,6 @@ public class Spawning : MonoBehaviour
 
 			rockGodText.GetComponent<TextMesh>().text = "Rock GOD: " + rockGodMeter.ToString("P1");
 		}
-
-		progress.transform.localScale = new Vector3(rockOnMeter * 3.0f, 1.0f, 1.0f);
-		rgProgress.transform.localScale = new Vector3(rockGodMeter * 5.0f, 0.5f, 1.0f);
 	}
 
 	// Updates the currentEnemies count, as well as the score.
@@ -131,11 +130,21 @@ public class Spawning : MonoBehaviour
 		{
 			rockOnMeter += 0.05f;
 
+			// increasing size of progress bar
+			Vector3 barScale = progress.transform.localScale;
+			barScale += new Vector3 (0.15f, 0.0f, 0.0f);
+			progress.transform.localScale = barScale;
+
 			if(rockOnMeter >= 1.0f)
 			{
 				rockOnMeter = 1.0f;
 
 				rockGodMeter += 0.333f;
+
+				// increasing size of progress bar
+				Vector3 rgBarScale = rgProgress.transform.localScale;
+				rgBarScale += new Vector3 (1.0f, 0.0f, 0.0f);
+				rgProgress.transform.localScale = rgBarScale;
 
 				if(rockGodMeter >= 0.999f)
 				{
@@ -152,8 +161,7 @@ public class Spawning : MonoBehaviour
     // Subtracts 1 HP from the player. Returns whether or not the player is still alive.
     public bool playerHit()
 	{
-
-        health--;
+		health--;
 
         changeLives();
 

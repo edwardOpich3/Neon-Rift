@@ -14,16 +14,12 @@ public class PlayerMovement : MonoBehaviour {
 
     public bool canShoot;
 
-	private AudioSource source;
-
 	// Use this for initialization
 	void Start ()
 	{
 		spawning = GameObject.Find("Game Manager").GetComponent<Spawning>();
 		invincibilityTimer = 0.0f;
 		isInvincible = false;
-
-		source = GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
@@ -79,9 +75,6 @@ public class PlayerMovement : MonoBehaviour {
 				SceneManager.LoadScene("Game Over");
 			}
 			isInvincible = true;
-
-			source.volume = 3.5f;
-			source.Play();
 		}
 	}
 }
