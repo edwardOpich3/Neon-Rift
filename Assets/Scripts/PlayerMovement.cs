@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour {
 	private float invincibilityTimer;		// Amount of time player has had invincibility.
 	private bool isInvincible;				// Is the player currently invincible?
 
+	private AudioSource hurtSFX;
+
     public bool canShoot;
 
 	// Use this for initialization
@@ -20,6 +22,8 @@ public class PlayerMovement : MonoBehaviour {
 		spawning = GameObject.Find("Game Manager").GetComponent<Spawning>();
 		invincibilityTimer = 0.0f;
 		isInvincible = false;
+
+		hurtSFX = GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
@@ -75,6 +79,8 @@ public class PlayerMovement : MonoBehaviour {
 				SceneManager.LoadScene("Game Over");
 			}
 			isInvincible = true;
+
+			hurtSFX.Play();
 		}
 	}
 }

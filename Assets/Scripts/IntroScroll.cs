@@ -17,7 +17,7 @@ public class IntroScroll : MonoBehaviour
 	{
 		transform.Translate(new Vector3(0.0f, 50.0f, 0.0f) * Time.deltaTime);
 
-		if(Input.GetMouseButton(0) || transform.position.y > 2250.0f)
+		if(Input.GetMouseButton(0) || transform.position.y > 1850.0f)
 		{
 			SceneManager.LoadScene("Main Menu");
 		}
