@@ -117,7 +117,7 @@ public class GodBulletMove : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		transform.Translate(speed, 0, 0);
+		transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
 
 		if (Camera.main.WorldToViewportPoint(transform.position).x > 1)
 		{

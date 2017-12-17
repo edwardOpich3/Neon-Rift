@@ -32,29 +32,29 @@ public class PlayerMovement : MonoBehaviour {
 
         if (canShoot == false)
         {
-            speed = .1f;
+            speed = 7.0f;
         }
         else
         {
-            speed = .17f;
+            speed = 10.0f;
         }
 
 		if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
-			transform.Translate(new Vector3(0.0f, speed, 0.0f));
+			transform.Translate(new Vector3(0.0f, speed, 0.0f) * Time.deltaTime);
 
 			if(Camera.main.WorldToViewportPoint(transform.position).y > 0.8)
 			{
-				transform.Translate(0.0f, -speed, 0.0f);
+				transform.Translate(new Vector3(0.0f, -speed, 0.0f) * Time.deltaTime);
 			}
         }
 		else if(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
-			transform.Translate(new Vector3(0.0f, -speed, 0.0f));
+			transform.Translate(new Vector3(0.0f, -speed, 0.0f) * Time.deltaTime);
 
 			if(Camera.main.WorldToViewportPoint(transform.position).y < 0.2)
 			{
-				transform.Translate(0.0f, speed, 0.0f);
+				transform.Translate(new Vector3(0.0f, speed, 0.0f) * Time.deltaTime);
 			}
         }
 

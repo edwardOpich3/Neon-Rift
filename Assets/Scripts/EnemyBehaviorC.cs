@@ -38,12 +38,12 @@ public class EnemyBehaviorC : MonoBehaviour {
 		}
 		if(this.transform.position.y > jumpEndPos - 0.1f && this.transform.position.y < jumpEndPos + 0.1f && enemyCRigidbody.velocity.y == 0)
 		{
-			transform.Translate(groundSpeed, 0, 0);
+			transform.Translate(new Vector3(groundSpeed, 0, 0) * Time.deltaTime);
 			this.tag = "Invunrable";
 		}
 		else
 		{
-			transform.Translate(jumpSpeed, 0, 0);
+			transform.Translate(new Vector3(jumpSpeed, 0, 0) * Time.deltaTime);
 		}
 		isJumping = false;
 	}
