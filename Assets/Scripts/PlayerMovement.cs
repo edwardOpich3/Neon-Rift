@@ -53,12 +53,16 @@ public class PlayerMovement : MonoBehaviour {
         }
 		else if(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
-			GetComponent<Animator>().SetTrigger("jaxFly");
 			transform.Translate(new Vector3(0.0f, -speed, 0.0f) * Time.deltaTime);
 
 			if(Camera.main.WorldToViewportPoint(transform.position).y < 0.2)
 			{
+				GetComponent<Animator>().SetTrigger("jaxIdle");
 				transform.Translate(new Vector3(0.0f, speed, 0.0f) * Time.deltaTime);
+			}
+			else
+			{
+				GetComponent<Animator>().SetTrigger("jaxFly");
 			}
         }
 

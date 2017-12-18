@@ -40,8 +40,8 @@ public class Spawning : MonoBehaviour
 		currentTick = 0.0f;
 		score = 0;
 
-		rockOnMeter = 1.0f;
-		rockGodMeter = 1.0f;
+		rockOnMeter = 0.0f;
+		rockGodMeter = 0.0f;
 
         livesText.GetComponent<TextMesh>().text = "Lives: " + health;
         scoreText.GetComponent<TextMesh>().text = "Score: " + score;

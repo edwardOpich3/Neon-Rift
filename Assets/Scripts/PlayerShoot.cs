@@ -74,7 +74,10 @@ public class PlayerShoot : MonoBehaviour {
 		}
 		else if(spawning.getRockGod() == 0.0f)
 		{
-			GetComponent<Animator>().SetTrigger("jaxIdle");
+			if(isRockGod)
+			{
+				GetComponent<Animator>().SetTrigger("jaxIdle");
+			}
 			isRockGod = false;
 		}
     }
