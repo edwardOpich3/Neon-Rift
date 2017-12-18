@@ -1,0 +1,46 @@
+Initialize engine version: 5.6.0f3 (497a0f351392)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: Intel(R) HD Graphics 5500 (ID=0x1616)
+    Vendor:   Intel
+    VRAM:     2111 MB
+    Driver:   20.19.15.4642
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Sharlene\Desktop\Neon Rift\builds\testbuild_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Sharlene\Desktop\Neon Rift\builds\testbuild_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Sharlene\Desktop\Neon Rift\builds\testbuild_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Sharlene\Desktop\Neon Rift\builds\testbuild_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Sharlene\Desktop\Neon Rift\builds\testbuild_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Sharlene\Desktop\Neon Rift\builds\testbuild_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Sharlene\Desktop\Neon Rift\builds\testbuild_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Sharlene\Desktop\Neon Rift\builds\testbuild_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.023 seconds
+Platform assembly: C:\Users\Sharlene\Desktop\Neon Rift\builds\testbuild_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Sharlene\Desktop\Neon Rift\builds\testbuild_Data\Managed\System.dll (this message is harmless)
+desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 4.704037 ms
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.624037 ms
+
+Unloading 13 unused Assets to reduce memory usage. Loaded Objects now: 297.
+Total: 0.298113 ms (FindLiveObjects: 0.040588 ms CreateObjectMapping: 0.024259 ms MarkObjects: 0.196409 ms  DeleteObjects: 0.035922 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.705862 ms
+
+Unloading 13 unused Assets to reduce memory usage. Loaded Objects now: 421.
+Total: 0.341034 ms (FindLiveObjects: 0.037322 ms CreateObjectMapping: 0.021460 ms MarkObjects: 0.236064 ms  DeleteObjects: 0.045720 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.733854 ms
+
+Unloading 80 unused Assets to reduce memory usage. Loaded Objects now: 287.
+Total: 1.257768 ms (FindLiveObjects: 0.033590 ms CreateObjectMapping: 0.029391 ms MarkObjects: 0.167018 ms  DeleteObjects: 1.027302 ms)
+
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: dd4 -> priority: 1 
+  Thread -> id: d5c -> priority: 1 

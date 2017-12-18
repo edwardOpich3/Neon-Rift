@@ -38,7 +38,8 @@ public class EnemyBehaviorC : MonoBehaviour {
 		}
 		if(this.transform.position.y > jumpEndPos - 0.1f && this.transform.position.y < jumpEndPos + 0.1f && enemyCRigidbody.velocity.y == 0)
 		{
-			transform.Translate(groundSpeed, 0, 0);
+            GetComponent<Animator>().SetTrigger("enCRun");
+            transform.Translate(groundSpeed, 0, 0);
 			this.tag = "Invunrable";
 		}
 		else

@@ -29,6 +29,7 @@ public class EnemyBehaviorB : MonoBehaviour
 // Update is called once per frame
 void Update ()
     {
+        //GetComponent<Animator>().SetTrigger("enB_run");
         pos -= transform.right * Time.deltaTime * speed;
 		transform.position = pos + axis * Mathf.Sin((Time.time - timeSpawned) * frequency) * magnitude;
     }
