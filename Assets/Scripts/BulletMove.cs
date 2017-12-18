@@ -123,6 +123,17 @@ public class BulletMove : MonoBehaviour {
 		// Bullets destroy enemies, but they don't destroy enemy A, which is a projectile
 		if(other.gameObject.name.Substring(0, 5) == "Enemy" && other.gameObject.name[6] != 'A' && other.gameObject.tag != "Invunrable")
 		{
+			//animation code
+			if (other.gameObject.name[6] == 'B')
+			{
+				//trigger animation
+				other.gameObject.GetComponent<Animator>().SetTrigger("enBDead");
+			}
+			else if (other.gameObject.name[6] == 'C') {
+				//trigger animation
+				other.gameObject.GetComponent<Animator>().SetTrigger("enCDead");
+			}
+
 			Destroy(other.gameObject);
 			spawning.enemyHit();
 			Destroy(gameObject);

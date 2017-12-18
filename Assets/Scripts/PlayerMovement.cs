@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour {
 
 		if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
+			GetComponent<Animator>().SetTrigger("jaxFly");
 			transform.Translate(new Vector3(0.0f, speed, 0.0f) * Time.deltaTime);
 
 			if(Camera.main.WorldToViewportPoint(transform.position).y > 0.8)
@@ -52,6 +53,7 @@ public class PlayerMovement : MonoBehaviour {
         }
 		else if(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
+			GetComponent<Animator>().SetTrigger("jaxFly");
 			transform.Translate(new Vector3(0.0f, -speed, 0.0f) * Time.deltaTime);
 
 			if(Camera.main.WorldToViewportPoint(transform.position).y < 0.2)
@@ -90,8 +92,11 @@ public class PlayerMovement : MonoBehaviour {
 			// Replace this with whatever should happen when the player gets hit by an enemy!
 			if(!spawning.playerHit())
 			{
+				GetComponent<Animator>().SetTrigger("jaxDeath");
 				SceneManager.LoadScene("Game Over");
 			}
+
+			GetComponent<Animator>().SetTrigger("jaxHit");
 			isInvincible = true;
 
 			hurtSFX.Play();

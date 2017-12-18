@@ -69,10 +69,12 @@ public class PlayerShoot : MonoBehaviour {
 		// Activate God mode if the Rock GOD meter is full and the player hits V
 		if(Input.GetKey(KeyCode.V) && spawning.getRockGod() == 1.0f && !isRockOn)
 		{
+			GetComponent<Animator>().SetTrigger("jaxGM");
 			isRockGod = true;
 		}
 		else if(spawning.getRockGod() == 0.0f)
 		{
+			GetComponent<Animator>().SetTrigger("jaxIdle");
 			isRockGod = false;
 		}
     }
