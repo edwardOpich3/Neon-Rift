@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour {
 	private bool isInvincible;				// Is the player currently invincible?
 
 	private AudioSource hurtSFX;
+	private SpriteRenderer sprite;
 
     public bool canShoot;
 
@@ -24,6 +25,7 @@ public class PlayerMovement : MonoBehaviour {
 		isInvincible = false;
 
 		hurtSFX = GetComponent<AudioSource>();
+		sprite = GetComponent<SpriteRenderer>();
     }
 	
 	// Update is called once per frame
@@ -64,7 +66,19 @@ public class PlayerMovement : MonoBehaviour {
 			if(invincibilityTimer >= invincibleTime)
 			{
 				isInvincible = false;
+				sprite.enabled = true;
 				invincibilityTimer = 0.0f;
+			}
+			else
+			{
+				if(invincibilityTimer % 0.5f > 0.25f)
+				{
+					sprite.enabled = false;
+				}
+				else
+				{
+					sprite.enabled = true;
+				}
 			}
 		}
 	}
